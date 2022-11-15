@@ -1,10 +1,16 @@
 import css from './Phonebook.module.css';
 import React, { useState } from 'react';
 import PropTypes from 'prop-types';
+import { useDispatch, useSelector } from 'react-redux';
+import { addContact } from '../../redux/contactsSlice';
 
-const Phonebook = ({ onAddContact }) => {
+const Phonebook = () => {
   const [name, setName] = useState('');
   const [number, setNumber] = useState('');
+
+  const dispatch = useDispatch();
+  const contacts = useSelector(store => store.contacts);
+  console.log(1111, contacts);
 
   const handleChangeForm = e => {
     if (e.target.name === 'name') {
@@ -14,9 +20,18 @@ const Phonebook = ({ onAddContact }) => {
     }
   };
 
-  const onAddContactReset = e => {
+  const onAddContact = e => {
     e.preventDefault();
-    onAddContact(name, number);
+    // onAddContact(name, number);
+    if (
+      contacts.some(item => {
+        return item.name.toLowerCase() === name.toLowerCase();
+      })
+    ) {
+      alert(`${name} is already in contacts`);
+    } else {
+      dispatch(addContact(name, number));
+    }
     setName('');
     setNumber('');
     e.currentTarget.reset();
@@ -24,7 +39,7 @@ const Phonebook = ({ onAddContact }) => {
 
   return (
     <>
-      <form onSubmit={onAddContactReset} className={css.form}>
+      <form onSubmit={onAddContact} className={css.form}>
         <label>
           Name
           <input

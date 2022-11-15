@@ -29,23 +29,23 @@ export const App = () => {
   //   [contacts]
   // );
 
-  const onAddContact = (name, phone) => {
-    const id = nanoid();
-    const newContact = {
-      name,
-      id,
-      phone,
-    };
-    if (
-      contacts.some(item => {
-        return item.name.toLowerCase() === name.toLowerCase();
-      })
-    ) {
-      alert(`${name} is already in contacts`);
-    } else {
-      setContacts(prevState => [...prevState, newContact]);
-    }
-  };
+  // const onAddContact = (name, phone) => {
+  //   const id = nanoid();
+  //   const newContact = {
+  //     name,
+  //     id,
+  //     phone,
+  //   };
+  //   if (
+  //     contacts.some(item => {
+  //       return item.name.toLowerCase() === name.toLowerCase();
+  //     })
+  //   ) {
+  //     alert(`${name} is already in contacts`);
+  //   } else {
+  //     setContacts(prevState => [...prevState, newContact]);
+  //   }
+  // };
 
   const handleChange = e => {
     setFilter(e.target.value);
@@ -72,7 +72,7 @@ export const App = () => {
   return (
     <>
       <h2 className={css.header}>Phonebook</h2>
-      <Phonebook onAddContact={onAddContact} />
+      <Phonebook />
       <h2 className={css.header}>Contacts</h2>
       <Filter filter={filter} handleChange={handleChange}></Filter>
       <Contacts filteredArray={onFilteredArray} onDelete={onDelete} />
