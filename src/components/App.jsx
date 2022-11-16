@@ -2,7 +2,7 @@ import React, { useState } from 'react';
 import Phonebook from './Phonebook/Phonebook';
 import Contacts from './Contacts/Contacts';
 import Filter from './Filter/Filter';
-import { nanoid } from 'nanoid';
+// import { nanoid } from 'nanoid';
 import css from './App.module.css';
 import { useEffect } from 'react';
 

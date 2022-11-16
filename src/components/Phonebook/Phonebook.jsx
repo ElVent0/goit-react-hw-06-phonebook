@@ -23,6 +23,7 @@ const Phonebook = () => {
   const onAddContact = e => {
     e.preventDefault();
     // onAddContact(name, number);
+    console.log(name, number);
     if (
       contacts.some(item => {
         return item.name.toLowerCase() === name.toLowerCase();
