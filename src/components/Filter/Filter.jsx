@@ -1,7 +1,10 @@
 import css from './Filter.module.css';
 import PropTypes from 'prop-types';
+import { useSelector } from 'react-redux';
 
-const Filter = ({ filter, handleChange }) => {
+const Filter = ({ handleChange }) => {
+  const filter = useSelector(store => store.filter);
+  console.log('filter', filter);
   return (
     <>
       <p className={css.paragraph}>Find contacts by name</p>
@@ -9,7 +12,7 @@ const Filter = ({ filter, handleChange }) => {
         className={css.input}
         type="text"
         name="filter"
-        value={filter}
+        value={filter.filter}
         onChange={handleChange}
       />
     </>

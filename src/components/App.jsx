@@ -2,68 +2,42 @@ import React, { useState } from 'react';
 import Phonebook from './Phonebook/Phonebook';
 import Contacts from './Contacts/Contacts';
 import Filter from './Filter/Filter';
-// import { nanoid } from 'nanoid';
 import css from './App.module.css';
 import { useEffect } from 'react';
+import { useDispatch, useSelector } from 'react-redux';
+import { changeFilter } from '../redux/filterSlice';
 
 export const App = () => {
-  const [contacts, setContacts] = useState([]);
-  const [filter, setFilter] = useState('');
+  // const [contacts, setContacts] = useState([]);
+  // const [filter, setFilter] = useState('');
 
-  useEffect(() => {
-    if (localStorage.getItem('contacts')) {
-      try {
-        setContacts(() => JSON.parse(localStorage.getItem('contacts')));
-      } catch (e) {
-        console.log(e);
-      }
-    }
-  }, []);
-
-  // useEffect(
-  //   prevState => {
-  //     if (contacts !== prevState) {
-  //       localStorage.setItem('contacts', JSON.stringify(contacts));
+  // useEffect(() => {
+  //   if (localStorage.getItem('contacts')) {
+  //     try {
+  //       setContacts(() => JSON.parse(localStorage.getItem('contacts')));
+  //     } catch (e) {
+  //       console.log(e);
   //     }
-  //   },
-  //   [contacts]
-  // );
-
-  // const onAddContact = (name, phone) => {
-  //   const id = nanoid();
-  //   const newContact = {
-  //     name,
-  //     id,
-  //     phone,
-  //   };
-  //   if (
-  //     contacts.some(item => {
-  //       return item.name.toLowerCase() === name.toLowerCase();
-  //     })
-  //   ) {
-  //     alert(`${name} is already in contacts`);
-  //   } else {
-  //     setContacts(prevState => [...prevState, newContact]);
   //   }
-  // };
+  // }, []);
+
+  const dispatch = useDispatch();
 
   const handleChange = e => {
-    setFilter(e.target.value);
+    dispatch(changeFilter(e.target.value));
   };
 
-  const onDelete = id => {
-    setContacts(prevState => prevState.filter(item => item.id !== id));
-    console.log(contacts);
-  };
+  const store = useSelector(store => store);
 
+  console.log(store);
   const onFilteredArray = () => {
     let filteredArray = [];
-    if (filter === '') {
-      console.log(contacts);
-      filteredArray = [...contacts];
-    } else if (filter !== '') {
-      return contacts.filter(item =>
-        item.name.toLowerCase().includes(filter.toLowerCase())
+    if (store.filter === '') {
+      filteredArray = [...store.contacts.contacts];
+    } else if (store.filter !== '') {
+      console.log('dknkjdfnvkjdfng', store);
+      return store.contacts.contacts.filter(item =>
+        item.name.toLowerCase().includes(store.filter.toLowerCase())
       );
     }
     return filteredArray;
@@ -74,8 +48,8 @@ export const App = () => {
       <h2 className={css.header}>Phonebook</h2>
       <Phonebook />
       <h2 className={css.header}>Contacts</h2>
-      <Filter filter={filter} handleChange={handleChange}></Filter>
-      <Contacts filteredArray={onFilteredArray} onDelete={onDelete} />
+      <Filter handleChange={handleChange}></Filter>
+      <Contacts filteredArray={onFilteredArray} />
     </>
   );
 };

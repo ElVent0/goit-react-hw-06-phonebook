@@ -9,8 +9,7 @@ const Phonebook = () => {
   const [number, setNumber] = useState('');
 
   const dispatch = useDispatch();
-  const contacts = useSelector(store => store.contacts);
-  console.log(1111, contacts);
+  const contacts = useSelector(store => store.contacts.contacts);
 
   const handleChangeForm = e => {
     if (e.target.name === 'name') {
@@ -22,16 +21,15 @@ const Phonebook = () => {
 
   const onAddContact = e => {
     e.preventDefault();
-    // onAddContact(name, number);
     console.log(name, number);
     if (
       contacts.some(item => {
-        return item.name.toLowerCase() === name.toLowerCase();
+        return item.name === name;
       })
     ) {
       alert(`${name} is already in contacts`);
     } else {
-      dispatch(addContact(name, number));
+      dispatch(addContact({ name, number }));
     }
     setName('');
     setNumber('');
