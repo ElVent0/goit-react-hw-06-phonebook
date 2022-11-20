@@ -1,10 +1,23 @@
 import css from './Contacts.module.css';
 import PropTypes from 'prop-types';
 import { deleteContact } from '../../redux/contactsSlice';
-import { useDispatch } from 'react-redux';
+import { useDispatch, useSelector } from 'react-redux';
 
-const Contacts = ({ filteredArray }) => {
+const Contacts = () => {
   const dispatch = useDispatch();
+  const store = useSelector(store => store);
+
+  const filteredArray = () => {
+    let filteredArray = [];
+    if (store.filter === '') {
+      filteredArray = store.contacts.contacts;
+    } else if (store.filter !== '') {
+      return store.contacts.contacts.filter(item =>
+        item.name.toLowerCase().includes(store.filter.toLowerCase())
+      );
+    }
+    return filteredArray;
+  };
 
   return (
     <>
@@ -17,7 +30,6 @@ const Contacts = ({ filteredArray }) => {
                 className={css.button}
                 name={item.name}
                 onClick={() => {
-                  console.log('sdfjbsdkjf');
                   dispatch(deleteContact(item.name));
                 }}
               >

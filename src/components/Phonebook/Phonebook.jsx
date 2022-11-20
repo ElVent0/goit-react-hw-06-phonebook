@@ -21,10 +21,9 @@ const Phonebook = () => {
 
   const onAddContact = e => {
     e.preventDefault();
-    console.log(name, number);
     if (
       contacts.some(item => {
-        return item.name === name;
+        return item.name.toLowerCase() === name.toLowerCase();
       })
     ) {
       alert(`${name} is already in contacts`);

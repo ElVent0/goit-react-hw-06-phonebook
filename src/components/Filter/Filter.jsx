@@ -1,10 +1,16 @@
 import css from './Filter.module.css';
 import PropTypes from 'prop-types';
-import { useSelector } from 'react-redux';
+import { useDispatch, useSelector } from 'react-redux';
+import { changeFilter } from '../../redux/filterSlice';
 
-const Filter = ({ handleChange }) => {
+const Filter = () => {
+  const dispatch = useDispatch();
   const filter = useSelector(store => store.filter);
-  console.log('filter', filter);
+
+  const handleChange = e => {
+    dispatch(changeFilter(e.target.value));
+  };
+
   return (
     <>
       <p className={css.paragraph}>Find contacts by name</p>
