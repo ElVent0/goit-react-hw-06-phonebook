@@ -1,19 +1,20 @@
 import css from './Contacts.module.css';
 import PropTypes from 'prop-types';
-import { deleteContact } from '../../redux/contactsSlice';
+import { deleteContact } from '../../redux/phonebookSlice';
 import { useDispatch, useSelector } from 'react-redux';
 
 const Contacts = () => {
   const dispatch = useDispatch();
-  const store = useSelector(store => store);
+  const contacts = useSelector(store => store.phonebook.contacts);
+  const filter = useSelector(store => store.phonebook.filter);
 
   const filteredArray = () => {
     let filteredArray = [];
-    if (store.filter === '') {
-      filteredArray = store.contacts.contacts;
-    } else if (store.filter !== '') {
-      return store.contacts.contacts.filter(item =>
-        item.name.toLowerCase().includes(store.filter.toLowerCase())
+    if (filter === '') {
+      filteredArray = contacts;
+    } else if (filter !== '') {
+      return contacts.filter(item =>
+        item.name.toLowerCase().includes(filter.toLowerCase())
       );
     }
     return filteredArray;

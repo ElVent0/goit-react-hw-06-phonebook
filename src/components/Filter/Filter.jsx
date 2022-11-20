@@ -1,11 +1,11 @@
 import css from './Filter.module.css';
 import PropTypes from 'prop-types';
 import { useDispatch, useSelector } from 'react-redux';
-import { changeFilter } from '../../redux/filterSlice';
+import { changeFilter } from '../../redux/phonebookSlice';
 
 const Filter = () => {
   const dispatch = useDispatch();
-  const filter = useSelector(store => store.filter);
+  const filter = useSelector(store => store.phonebook.filter);
 
   const handleChange = e => {
     dispatch(changeFilter(e.target.value));
@@ -18,7 +18,7 @@ const Filter = () => {
         className={css.input}
         type="text"
         name="filter"
-        value={filter.filter}
+        value={filter}
         onChange={handleChange}
       />
     </>
